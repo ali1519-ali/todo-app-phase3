@@ -46,7 +46,8 @@ def start_application():
     import importlib.util
 
     # Load the main module directly from file
-    spec = importlib.util.spec_from_file_location("main", "/app/backend/main.py")
+    # In the Docker container, backend files are copied directly to /app
+    spec = importlib.util.spec_from_file_location("main", "/app/main.py")
     main_module = importlib.util.module_from_spec(spec)
     sys.modules["main"] = main_module
     spec.loader.exec_module(main_module)
