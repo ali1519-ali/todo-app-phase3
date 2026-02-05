@@ -35,16 +35,28 @@ def start_application():
 
     # Add backend to Python path - both /app and /app/backend
     import sys
+    import os
     sys.path.insert(0, '/app')
     sys.path.insert(0, '/app/backend')
 
     # Set PYTHONPATH environment variable as well
     os.environ['PYTHONPATH'] = '/app:/app/backend:' + os.environ.get('PYTHONPATH', '')
 
-    # Import and run the application directly
+    # Change to the app directory to ensure relative imports work
+    os.chdir('/app')
+
+    # Import and run the application directly using importlib to bypass caching issues
     import uvicorn
-    # Import the app directly from the backend module
-    from backend.main import app
+    import importlib.util
+
+    # Load the main module directly from file
+    spec = importlib.util.spec_from_file_location("main", "/app/backend/main.py")
+    main_module = importlib.util.module_from_spec(spec)
+    sys.modules["main"] = main_module
+    spec.loader.exec_module(main_module)
+
+    # Get the app instance
+    app = main_module.app
 
     port = int(os.environ.get("PORT", 8000))
     logger.info(f"Starting server on port {port}")
