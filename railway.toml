@@ -10,6 +10,7 @@ numReplicas = 1
 region = "us-central1"
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 3
+startCommand = "python entrypoint.py"
 
 # Environment variables
 [variables]
