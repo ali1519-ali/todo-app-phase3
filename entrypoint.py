@@ -35,7 +35,6 @@ def start_application():
 
     # Add backend to Python path - both /app and /app/backend
     import sys
-    import os
     sys.path.insert(0, '/app')
     sys.path.insert(0, '/app/backend')
 
@@ -43,6 +42,7 @@ def start_application():
     os.environ['PYTHONPATH'] = '/app:/app/backend:' + os.environ.get('PYTHONPATH', '')
 
     # Change to the app directory to ensure relative imports work
+    import os
     os.chdir('/app')
 
     # Import and run the application directly using importlib to bypass caching issues
