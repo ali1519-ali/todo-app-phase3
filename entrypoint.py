@@ -41,10 +41,6 @@ def start_application():
     # Set PYTHONPATH environment variable as well
     os.environ['PYTHONPATH'] = '/app:/app/backend:' + os.environ.get('PYTHONPATH', '')
 
-    # Change to the app directory to ensure relative imports work
-    import os
-    os.chdir('/app')
-
     # Import and run the application directly using importlib to bypass caching issues
     import uvicorn
     import importlib.util
