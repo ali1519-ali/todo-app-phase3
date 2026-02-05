@@ -5,10 +5,11 @@ import sys
 
 def main():
     # Add the backend directory to Python path
+    sys.path.insert(0, '/app')
     sys.path.insert(0, '/app/backend')
 
     # Set environment variable to help with imports
-    os.environ['PYTHONPATH'] = '/app/backend'
+    os.environ['PYTHONPATH'] = '/app:/app/backend:' + os.environ.get('PYTHONPATH', '')
 
     # Set default database URL to SQLite for local development/testing
     if 'DATABASE_URL' not in os.environ:

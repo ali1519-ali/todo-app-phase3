@@ -33,11 +33,17 @@ def start_application():
     if 'DATABASE_URL' not in os.environ:
         os.environ['DATABASE_URL'] = 'sqlite:///./todo_chatbot.db'
 
-    # Add backend to Python path
+    # Add backend to Python path - both /app and /app/backend
+    import sys
+    sys.path.insert(0, '/app')
     sys.path.insert(0, '/app/backend')
+
+    # Set PYTHONPATH environment variable as well
+    os.environ['PYTHONPATH'] = '/app:/app/backend:' + os.environ.get('PYTHONPATH', '')
 
     # Import and run the application directly
     import uvicorn
+    # Import the app directly from the backend module
     from backend.main import app
 
     port = int(os.environ.get("PORT", 8000))
