@@ -52,5 +52,8 @@ RUN chmod +x start_app.sh
 # Copy the entrypoint script
 COPY entrypoint.py .
 
+# Expose the port (using a default that can be overridden)
+EXPOSE 8000
+
 # Run the application - the port will be set by Railway
 CMD ["python", "./entrypoint.py"]
